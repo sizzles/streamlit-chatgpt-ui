@@ -1,0 +1,86 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Syllabus",
+    "description": "A schema for a Python coding syllabus",
+    "type": "object",
+    "properties": {
+      "student_name": {
+        "description": "The name of the student",
+        "type": "string"
+      },
+      "chapters": {
+        "description": "A list of chapters in the syllabus",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "description": "The title of the chapter",
+              "type": "string"
+            },
+            "completed": {
+              "description": "A boolean value indicating if the chapter is completed",
+              "type": "boolean"
+            },
+            "completion_time": {
+              "description": "The date and time when the chapter was completed",
+              "type": "string",
+              "format": "date-time"
+            },
+            "conversation_history": {
+              "description": "A list of conversations with a GPT language model",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "description": "The date and time when the message was sent",
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "sender": {
+                    "description": "The sender of the message",
+                    "type": "string"
+                  },
+                  "message": {
+                    "description": "The content of the message",
+                    "type": "string"
+                  }
+                },
+                "required": ["timestamp", "sender", "message"]
+              }
+            },
+            "sub_lessons": {
+              "description": "A list of sub-lessons in the chapter",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "description": "The title of the sub-lesson",
+                    "type": "string"
+                  },
+                  "completed": {
+                    "description": "A boolean value indicating if the sub-lesson is completed",
+                    "type": "boolean"
+                  },
+                  "completion_time": {
+                    "description": "The date and time when the sub-lesson was completed",
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "content": {
+                    "description": "The content of the sub-lesson in Markdown format",
+                    "type": "string"
+                  }
+                },
+                "required": ["title", "completed", "completion_time", "content"]
+              }
+            }
+          },
+          "required": ["title", "completed", "completion_time", "conversation_history", "sub_lessons"]
+        }
+      }
+    },
+    "required": ["student_name", "chapters"]
+  }

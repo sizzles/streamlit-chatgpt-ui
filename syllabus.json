@@ -1,0 +1,45 @@
+{
+  "student_name": "Student Name",
+  "chapters": [
+    {
+      "title": "Chapter 1: Introduction to Python",
+      "completed": false,
+      "completion_time": null,
+      "conversation_history": [],
+      "sub_lessons": [
+        {
+          "title": "Lesson 1.1: Python Basics",
+          "completed": true,
+          "completion_time": "2023-04-09T16:23:03.488504",
+          "content": "# Python Basics\n\nPython is a high-level, interpreted programming language known for its readability and versatility.\n\nHere's a basic example:\n\n```\nprint('Hello, World!')\n```"
+        },
+        {
+          "title": "Lesson 1.2: Variables and Data Types",
+          "completed": true,
+          "completion_time": "2023-04-09T16:23:04.646643",
+          "content": "# Variables and Data Types\n\nIn Python, you can store values in variables. There are different data types like integers, floats, strings, and booleans.\n\nExample:\n\n```\ninteger_var = 42\nfloat_var = 3.14\nstring_var = 'Hello, World!'\nboolean_var = True\n```"
+        }
+      ]
+    },
+    {
+      "title": "Chapter 2: Control Structures",
+      "completed": false,
+      "completion_time": null,
+      "conversation_history": [],
+      "sub_lessons": [
+        {
+          "title": "Lesson 2.1: Conditionals",
+          "completed": false,
+          "completion_time": null,
+          "content": "# Conditionals\n\nConditionals allow you to make decisions in your code based on whether a condition is true or false.\n\nExample:\n\n```\nage = 18\n\nif age >= 18:\n    print('You are an adult.')\nelse:\n    print('You are not an adult.')\n```"
+        },
+        {
+          "title": "Lesson 2.2: Loops",
+          "completed": false,
+          "completion_time": null,
+          "content": "# Loops\n\nLoops allow you to execute a block of code multiple times.\n\nThere are two types of loops in Python: `for` and `while`.\n\nExample:\n\n```\n# For loop\nfor i in range(5):\n    print(i)\n\n# While loop\ncounter = 0\nwhile counter < 5:\n    print(counter)\n    counter += 1\n```"
+        }
+      ]
+    }
+  ]
+}
