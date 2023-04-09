@@ -3,8 +3,11 @@ import streamlit as st
 from streamlit_chat import message
 import json
 from datetime import datetime
+from key import get_key
 
 st.set_page_config(page_title="Tutor Chat", page_icon=":robot_face:")
+
+
 
 def load_syllabus(file_path):
     with open(file_path, "r") as f:
@@ -21,8 +24,9 @@ def display_syllabus(syllabus_data):
 
     chapter_titles = [chapter["title"] for chapter in syllabus_data["chapters"]]
     selected_chapter_title = st.sidebar.selectbox("Select a chapter:", chapter_titles)
+    st.session_state["selected_chapter"] = selected_chapter_title
     selected_chapter = next(chapter for chapter in syllabus_data["chapters"] if chapter["title"] == selected_chapter_title)
-
+    
     st.subheader(selected_chapter["title"])
 
     for sub_lesson in selected_chapter["sub_lessons"]:
@@ -93,8 +97,8 @@ def display_side_bar():
 
 def init_session_info():
     # Set org ID and API key
-    openai.organization = "<YOUR_OPENAI_ORG_ID>"
-    openai.api_key = "<YOUR_OPENAI_API_KEY>"
+    openai.organization = ""#  "<YOUR_OPENAI_ORG_ID>"
+    openai.api_key =  get_key() #"<YOUR_OPENAI_API_KEY>"
 
     # Initialise session state variables
     if 'generated' not in st.session_state:
@@ -113,8 +117,10 @@ def init_session_info():
         st.session_state['total_tokens'] = []
     if 'total_cost' not in st.session_state:
         st.session_state['total_cost'] = 0.0
+    if 'selected_chapter' not in st.session_state:
+        st.session_state['selected_chapter'] = ""
 
-def display_chat_box(model_name, model, counter_placeholder):
+def display_chat_box(model_name, model, counter_placeholder, syllabus_data):
     # container for chat history
     response_container = st.container()
     # container for text box
@@ -140,6 +146,16 @@ def display_chat_box(model_name, model, counter_placeholder):
 
             st.session_state['cost'].append(cost)
             st.session_state['total_cost'] += cost
+
+            if st.session_state["selected_chapter"] == "":
+                selected_chapter = syllabus_data["chapters"][0]
+            else:
+                selected_chapter = next(chapter for chapter in syllabus_data["chapters"] if chapter["title"] == st.session_state["selected_chapter"] )
+            
+            selected_chapter["conversation_history"].append(user_input)
+            selected_chapter["conversation_history"].append(output)
+            save_syllabus(syllabus_data, syllabus_file)
+
 
     if st.session_state['generated']:
         with response_container:
@@ -175,6 +191,7 @@ init_session_info()
 # Load the syllabus JSON data
 syllabus_file = "syllabus.json"
 syllabus_data = load_syllabus(syllabus_file)
+print(syllabus_data)
 
 st.title("Python Coding Syllabus")
 
@@ -184,7 +201,7 @@ tab = st.sidebar.radio("Select a tab:", ["Syllabus", "Profile"])
 
 if tab == "Syllabus":
     display_syllabus(syllabus_data)
-    display_chat_box(model_name, model, counter_placeholder)
+    display_chat_box(model_name, model, counter_placeholder, syllabus_data)
 elif tab == "Profile":
     display_profile(syllabus_data)
 
